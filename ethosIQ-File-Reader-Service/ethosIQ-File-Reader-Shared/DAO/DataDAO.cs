@@ -53,7 +53,8 @@ namespace ethosIQ_File_Reader_Shared.DAO
                     }
                     else if (column.ColumnData is DateTime)
                     {
-                        InsertString += "to_date('" + column.ColumnData.ToString() + "','mm/dd/yyyy hh:mi:ss am'),";
+                        //InsertString += "to_date('" + column.ColumnData.ToString() + "','mm/dd/yyyy hh:mi:ss am'),";
+                        InsertString += CollectionDatabase.FormatDateTime((DateTime)column.ColumnData) + ",";
                     }
                     else if (column.ColumnData is int)
                     {
@@ -70,12 +71,16 @@ namespace ethosIQ_File_Reader_Shared.DAO
 
             InsertString += ")";
 
-            using (IDbConnection Connection = CollectionDatabase.CreateConnection())
+            using (IDbConnection Connection = CollectionDatabase.CreateOpenConnection())
             {
                 using (IDbCommand Command = CollectionDatabase.CreateCommand(InsertString, Connection))
                 {
-                    Connection.Open();
                     Command.ExecuteNonQuery();
+
+                    if(Command.Transaction != null)
+                    {
+                        Command.Transaction.Commit();
+                    }
                 }
             }
         }

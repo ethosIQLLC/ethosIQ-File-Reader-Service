@@ -150,6 +150,7 @@ namespace ethosIQ_File_Reader_Shared
                     DateTime FileExtensionDateTime = new DateTime();
                     DateTime ActualDateTime = new DateTime();
 
+                    Console.WriteLine("Checking File name and extensions...");
                     try
                     {
                         if (FileType.Settings.UseFileName && !FileType.Settings.UseFileExtension)
@@ -180,47 +181,50 @@ namespace ethosIQ_File_Reader_Shared
 
                     string[] AllRowsInFile = File.ReadAllLines(FullPath);
 
-                    string[] DataRows = AllRowsInFile.Skip(FileType.Headers.Count).ToArray();
-
-                    foreach (string DataLine in DataRows)
+                    if(AllRowsInFile.Count() > 0)
                     {
-                        int index = 0;
+                        string[] DataRows = AllRowsInFile.Skip(FileType.Headers.Count).ToArray();
 
-                        string[] Data = DataLine.Split(FileType.CharacterDelimiter);
-
-                        foreach (Column column in FileType.Columns.OrderBy(x => x.ColumnNumber))
+                        foreach (string DataLine in DataRows)
                         {
-                            if (!column.Ignore)
+                            int index = 0;
+
+                            string[] Data = DataLine.Split(FileType.CharacterDelimiter);
+
+                            foreach (Column column in FileType.Columns.OrderBy(x => x.ColumnNumber))
                             {
-                                if (FileType.Settings.LinkDateTime && FileType.Settings.DateTimeColumn == column.ColumnName)
+                                if (!column.Ignore)
                                 {
-                                    column.ColumnData = ActualDateTime;
-                                }
-                                else
-                                {
-                                    column.ColumnData = Data[index];
-                                }
-                                if (!column.NotInFile)
-                                {
-                                    index++;
+                                    if (FileType.Settings.LinkDateTime && FileType.Settings.DateTimeColumn == column.ColumnName)
+                                    {
+                                        column.ColumnData = ActualDateTime;
+                                    }
+                                    else
+                                    {
+                                        column.ColumnData = Data[index];
+                                    }
+                                    if (!column.NotInFile)
+                                    {
+                                        index++;
+                                    }
                                 }
                             }
-                        }
 
-                        if (CollectionDatabase != null)
-                        {
-                            try
+                            if (CollectionDatabase != null)
                             {
-                                DataDAO dataDAO = new DataDAO(CollectionDatabase);
-                                dataDAO.Insert(FileType.DatabaseStoredProcedureName, FileType.Columns);
-                            }
-                            catch (Exception exception)
-                            {
-                                Console.WriteLine("Failed to insert row: " + DataLine + " - " + exception.Message);
-
-                                if (eventLog != null)
+                                try
                                 {
-                                    eventLog.WriteEntry("Failed to insert row: " + DataLine + " - " + exception.Message, EventLogEntryType.Error);
+                                    DataDAO dataDAO = new DataDAO(CollectionDatabase);
+                                    dataDAO.Insert(FileType.DatabaseStoredProcedureName, FileType.Columns);
+                                }
+                                catch (Exception exception)
+                                {
+                                    Console.WriteLine("Failed to insert row: " + DataLine + " - " + exception.Message);
+
+                                    if (eventLog != null)
+                                    {
+                                        eventLog.WriteEntry("Failed to insert row: " + DataLine + " - " + exception.Message, EventLogEntryType.Error);
+                                    }
                                 }
                             }
                         }
@@ -279,7 +283,7 @@ namespace ethosIQ_File_Reader_Shared
                 foreach (string filename in FileNames)
                 {
                     using (FileStream inputStream = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.None))
-                        return inputStream.Length > 0;
+                        return true;
                 }
 
                 return true;

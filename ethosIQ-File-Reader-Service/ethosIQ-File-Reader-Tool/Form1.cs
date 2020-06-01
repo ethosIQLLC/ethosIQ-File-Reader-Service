@@ -1,7 +1,6 @@
 ﻿using ethosIQ_Configuration;
 using ethosIQ_Database;
 using ethosIQ_File_Reader_Shared;
-using ethosIQ_File_Reader_Shared.Configuration;
 using ethosIQ_File_Reader_Shared.DAO;
 using ethosIQ_File_Reader_Tool.FileTypeModal;
 using System;
@@ -178,9 +177,9 @@ namespace ethosIQ_File_Reader_Tool
             {
                 try
                 {
-                    using (IDbConnection connection = CollectionDatabase.CreateConnection())
+                    using (IDbConnection connection = CollectionDatabase.CreateOpenConnection())
                     {
-                        connection.Open();
+
                     }
 
                     connectedLabel.Invoke(new Action(() => connectedLabel.Text = "Connected"));

@@ -1,7 +1,6 @@
 ﻿using ethosIQ_Configuration;
 using ethosIQ_Database;
 using ethosIQ_File_Reader_Shared;
-using ethosIQ_File_Reader_Shared.Configuration;
 using ethosIQ_File_Reader_Shared.DAO;
 using System;
 using System.Collections.Generic;

@@ -21,16 +21,43 @@ namespace ethosIQ_File_Reader_Service
         static void Main(string[] args)
         {
 
-            char del = Convert.ToChar("\t");
-
             ServiceHost serviceHost;
             Program service = new Program();
             if (Environment.UserInteractive)
             {
+                
                 serviceHost = new ServiceHost(service);
+                
+                Database ConfigurationDatabase = null;
+                try
+                {
+                    ConfigurationDatabase = LocalConfigurationDatabase.GetConfigurationDatabase();
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Failed to get configuration database. " + exception.Message);
+                }
+
+                if(ConfigurationDatabase != null)
+                {
+                    FileTypeTableInstallation.CreateFileTypeTable(ConfigurationDatabase);
+                    ColumnTableInstallation.CreateColumnTable(ConfigurationDatabase);
+                    FooterTableInstallation.CreateFooterTable(ConfigurationDatabase);
+                    HeaderTableInstallation.CreateHeaderTable(ConfigurationDatabase);
+                    SettingsTableInstallation.CreateSettingsTable(ConfigurationDatabase);
+                    FileSourceTableInstallation.CreateFileSourceTable(ConfigurationDatabase);
+                    Console.WriteLine("Installed tables!");
+                }
+                else
+                {
+                    Console.WriteLine("Failed to install tables.");
+                }
+
                 serviceHost.Open();
                 service.OnStart(args);
+
                 Console.ReadLine();
+
             }
             else
             {

@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\CollectionDatabaseConfiguration.cs" />
     <Compile Include="DAO\ColumnDAO.cs" />
     <Compile Include="DAO\DataDAO.cs" />
     <Compile Include="DAO\FileSourceDAO.cs" />
@@ -69,6 +68,8 @@
     <Compile Include="Installation\SettingsTableInstallation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
