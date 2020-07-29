@@ -71,6 +71,8 @@ namespace ethosIQ_File_Reader_Shared.DAO
 
             InsertString += ")";
 
+            Console.WriteLine(InsertString);
+
             using (IDbConnection Connection = CollectionDatabase.CreateOpenConnection())
             {
                 using (IDbCommand Command = CollectionDatabase.CreateCommand(InsertString, Connection))

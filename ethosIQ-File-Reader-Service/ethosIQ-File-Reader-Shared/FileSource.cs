@@ -208,6 +208,10 @@ namespace ethosIQ_File_Reader_Shared
                                         index++;
                                     }
                                 }
+                                else //Added
+                                {
+                                    index++;
+                                }
                             }
 
                             if (CollectionDatabase != null)
@@ -215,7 +219,17 @@ namespace ethosIQ_File_Reader_Shared
                                 try
                                 {
                                     DataDAO dataDAO = new DataDAO(CollectionDatabase);
+                                    string debugData = "";
+
+                                    foreach(Column column in FileType.Columns)
+                                    {
+                                        debugData += column.ColumnNumber + ":" + column.ColumnName + ":" + column.DatabaseColumnName + ":" + column.ColumnData + "\n";
+                                    }
+
+                                    eventLog.WriteEntry("Attempting data: " + debugData, EventLogEntryType.Warning);
+
                                     dataDAO.Insert(FileType.DatabaseStoredProcedureName, FileType.Columns);
+
                                 }
                                 catch (Exception exception)
                                 {
