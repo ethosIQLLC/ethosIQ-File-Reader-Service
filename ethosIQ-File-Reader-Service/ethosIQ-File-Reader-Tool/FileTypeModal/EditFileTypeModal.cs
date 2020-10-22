@@ -74,6 +74,7 @@ namespace ethosIQ_File_Reader_Tool.FileTypeModal
                         dateTimeFormatFileExtensionTextBox.Invoke(new Action(() => dateTimeFormatFileExtensionTextBox.Text = Settings.DateTimeFormatFileExtension));
                         linkDateTimeCheckBox.Invoke(new Action(() => linkDateTimeCheckBox.Checked = Settings.LinkDateTime));
                         dateTimeColumnTextBox.Invoke(new Action(() => dateTimeColumnTextBox.Text = Settings.DateTimeColumn));
+                        truncateTableCheckBox.Invoke(new Action(() => truncateTableCheckBox.Checked = Settings.TruncateTable));
                     }
 
                     try
@@ -122,7 +123,7 @@ namespace ethosIQ_File_Reader_Tool.FileTypeModal
                 SettingsDAO settingsDAO = new SettingsDAO(ConfigurationDatabase);
                 settingsDAO.Delete(FileTypeID);
 
-                settingsDAO.Insert(new Settings(FileTypeID, useFileNameCheckBox.Checked, useFileExtensionCheckBox.Checked, textToIgnoreFileNameTextBox.Text, dateTimeFormatFileNameTextBox.Text, textToIgnoreFileExtensionTextBox.Text, dateTimeFormatFileExtensionTextBox.Text, linkDateTimeCheckBox.Checked, dateTimeColumnTextBox.Text));
+                settingsDAO.Insert(new Settings(FileTypeID, useFileNameCheckBox.Checked, useFileExtensionCheckBox.Checked, textToIgnoreFileNameTextBox.Text, dateTimeFormatFileNameTextBox.Text, textToIgnoreFileExtensionTextBox.Text, dateTimeFormatFileExtensionTextBox.Text, linkDateTimeCheckBox.Checked, dateTimeColumnTextBox.Text, truncateTableCheckBox.Checked));
 
                 ColumnDAO columnDAO = new ColumnDAO(ConfigurationDatabase);
                 columnDAO.DeleteAll(FileTypeID);

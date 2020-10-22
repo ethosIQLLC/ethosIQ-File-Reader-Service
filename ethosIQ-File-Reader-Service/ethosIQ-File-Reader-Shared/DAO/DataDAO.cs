@@ -18,6 +18,22 @@ namespace ethosIQ_File_Reader_Shared.DAO
             this.CollectionDatabase = CollectionDatabase;
         }
 
+        public void TruncateTable(string TableName)
+        {
+            using (IDbConnection Connection = CollectionDatabase.CreateOpenConnection())
+            {
+                using (IDbCommand Command = CollectionDatabase.CreateCommand("TRUNCATE TABLE " + TableName, Connection))
+                {
+                    Command.ExecuteNonQuery();
+
+                    if (Command.Transaction != null)
+                    {
+                        Command.Transaction.Commit();
+                    }
+                }
+            }
+        }
+
         public void Insert(string TableName, List<Column> Columns)
         {
             string InsertString = "INSERT INTO " + TableName + " (";

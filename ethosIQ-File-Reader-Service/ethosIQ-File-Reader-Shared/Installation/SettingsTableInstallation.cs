@@ -29,7 +29,8 @@ namespace ethosIQ_File_Reader_Shared.Installation
                                                 "TEXTTOIGNOREFILEEXTENSION TEXT," +
                                                 "DATETIMEFORMATFILEEXTENSION TEXT," +
                                                 "LINKDATETIME INTEGER," +
-                                                "DATETIMECOLUMN TEXT" +
+                                                "DATETIMECOLUMN TEXT," +
+                                                "TRUNCATETABLE INTEGER" +
                                                 ")";
 
                 using (IDbConnection connection = ConfigurationDatabase.CreateOpenConnection())

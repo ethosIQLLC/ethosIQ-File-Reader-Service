@@ -35,11 +35,11 @@ namespace ethosIQ_File_Reader_Tool
         {
             if (!EventLog.SourceExists("File Reader Tool"))
             {
-                EventLog.CreateEventSource("File Reader Tool", "eIQ-File-Reader-Service");
+                EventLog.CreateEventSource("File Reader Tool", "File Reader Service");
             }
 
             eventLog = new EventLog();
-            eventLog.Log = "eIQ-File-Reader-Service";
+            eventLog.Log = "File Reader Service";
             eventLog.Source = "File Reader Tool";
 
             try

@@ -67,12 +67,12 @@ namespace ethosIQ_File_Reader_Shared
             {
                 if (!EventLog.SourceExists(Name))
                 {
-                    EventLog.CreateEventSource(Name, "File-Reader-Service");
+                    EventLog.CreateEventSource(Name, "File Reader Service");
                 }
 
                 eventLog = new EventLog();
 
-                eventLog.Log = "File-Reader-Service";
+                eventLog.Log = "File Reader Service";
                 eventLog.Source = Name;
             }
             catch(Exception exception)
@@ -143,7 +143,7 @@ namespace ethosIQ_File_Reader_Shared
                 {
                     while (!IsFileReady(System.IO.Directory.GetFiles(Path.GetDirectoryName(e.FullPath)).ToList()))
                     {
-                        Thread.Sleep(5000);
+                        Thread.Sleep(2000);
                     }
 
                     DateTime FileNameDateTime = new DateTime();
@@ -178,6 +178,24 @@ namespace ethosIQ_File_Reader_Shared
                         }
                     }
 
+                    if (FileType.Settings.TruncateTable)
+                    {
+                        try
+                        {
+                            DataDAO dataDAO = new DataDAO(CollectionDatabase);
+                            dataDAO.TruncateTable(FileType.DatabaseStoredProcedureName);
+                            eventLog.WriteEntry("Successfully truncated table " + FileType.DatabaseStoredProcedureName + ".", EventLogEntryType.Information);
+                        }
+                        catch (Exception exception)
+                        {
+                            Console.WriteLine("Failed to truncate table " + FileType.DatabaseStoredProcedureName + ". " + exception.Message);
+
+                            if (eventLog != null)
+                            {
+                                eventLog.WriteEntry("Failed to truncate table " + FileType.DatabaseStoredProcedureName + ". " + exception.Message, EventLogEntryType.Error);
+                            }
+                        }
+                    }
 
                     string[] AllRowsInFile = File.ReadAllLines(FullPath);
 
@@ -221,15 +239,16 @@ namespace ethosIQ_File_Reader_Shared
                                     DataDAO dataDAO = new DataDAO(CollectionDatabase);
                                     string debugData = "";
 
+                                    /*
                                     foreach(Column column in FileType.Columns)
                                     {
                                         debugData += column.ColumnNumber + ":" + column.ColumnName + ":" + column.DatabaseColumnName + ":" + column.ColumnData + "\n";
                                     }
-
-                                    eventLog.WriteEntry("Attempting data: " + debugData, EventLogEntryType.Warning);
+                                    */
+                                    //eventLog.WriteEntry("Attempting data: " + debugData, EventLogEntryType.Warning);
 
                                     dataDAO.Insert(FileType.DatabaseStoredProcedureName, FileType.Columns);
-
+                                    
                                 }
                                 catch (Exception exception)
                                 {

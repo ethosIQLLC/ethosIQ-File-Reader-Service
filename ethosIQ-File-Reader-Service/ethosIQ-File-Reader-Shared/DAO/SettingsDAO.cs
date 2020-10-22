@@ -44,7 +44,8 @@ namespace ethosIQ_File_Reader_Shared.DAO
                                                         reader["TEXTTOIGNOREFILEEXTENSION"].ToString(),
                                                         reader["DATETIMEFORMATFILEEXTENSION"].ToString(),
                                                         Convert.ToBoolean(reader["LINKDATETIME"]),
-                                                        reader["DATETIMECOLUMN"].ToString());
+                                                        reader["DATETIMECOLUMN"].ToString(),
+                                                        Convert.ToBoolean(reader["TRUNCATETABLE"]));
                             }
                         }
                     }
@@ -56,7 +57,7 @@ namespace ethosIQ_File_Reader_Shared.DAO
 
         public void Insert(Settings Settings)
         {
-            string insertStatement = "INSERT INTO FILE_SETTINGS (FILETYPEID, USEFILENAME, USEFILEEXTENSION, TEXTTOIGNOREFILENAME, DATETIMEFORMATFILENAME, TEXTTOIGNOREFILEEXTENSION, DATETIMEFORMATFILEEXTENSION, LINKDATETIME, DATETIMECOLUMN) VALUES (" + Settings.FileTypeID + "," + Convert.ToInt32(Settings.UseFileName) + "," + Convert.ToInt32(Settings.UseFileExtension) + ",'" + Settings.TextToIgnoreFileName + "','" + Settings.DateTimeFormatFileName + "','" + Settings.TextToIgnoreFileExtension + "','" + Settings.DateTimeFormatFileExtension + "'," + Convert.ToInt32(Settings.LinkDateTime) + ",'" + Settings.DateTimeColumn + "')";
+            string insertStatement = "INSERT INTO FILE_SETTINGS (FILETYPEID, USEFILENAME, USEFILEEXTENSION, TEXTTOIGNOREFILENAME, DATETIMEFORMATFILENAME, TEXTTOIGNOREFILEEXTENSION, DATETIMEFORMATFILEEXTENSION, LINKDATETIME, DATETIMECOLUMN, TRUNCATETABLE) VALUES (" + Settings.FileTypeID + "," + Convert.ToInt32(Settings.UseFileName) + "," + Convert.ToInt32(Settings.UseFileExtension) + ",'" + Settings.TextToIgnoreFileName + "','" + Settings.DateTimeFormatFileName + "','" + Settings.TextToIgnoreFileExtension + "','" + Settings.DateTimeFormatFileExtension + "'," + Convert.ToInt32(Settings.LinkDateTime) + ",'" + Settings.DateTimeColumn + "'," + Convert.ToInt32(Settings.TruncateTable) + ")";
 
             using (IDbConnection connection = ConfigurationDatabase.CreateConnection())
             {

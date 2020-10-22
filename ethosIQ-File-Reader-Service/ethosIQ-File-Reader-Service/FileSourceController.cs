@@ -5,9 +5,6 @@ using ethosIQ_File_Reader_Shared.DAO;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ethosIQ_File_Reader_Service
 {
@@ -24,12 +21,12 @@ namespace ethosIQ_File_Reader_Service
             {
                 if (!EventLog.SourceExists("File Source Controller"))
                 {
-                    EventLog.CreateEventSource("File Source Controller", "File-Reader-Service");
+                    EventLog.CreateEventSource("File Source Controller", "File Reader Service");
                 }
 
                 eventLog = new EventLog();
 
-                eventLog.Log = "File-Reader-Service";
+                eventLog.Log = "File Reader Service";
                 eventLog.Source = "File Source Controller";
             }
             catch(Exception exception)

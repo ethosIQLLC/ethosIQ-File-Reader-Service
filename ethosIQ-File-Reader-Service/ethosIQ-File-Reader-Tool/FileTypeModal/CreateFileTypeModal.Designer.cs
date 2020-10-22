@@ -36,6 +36,11 @@
             this.addHeaderButton = new System.Windows.Forms.Button();
             this.columnGroupBox = new System.Windows.Forms.GroupBox();
             this.columnDataGridView = new System.Windows.Forms.DataGridView();
+            this.columnNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.columnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.databaseColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ignoreColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.notInFileColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.addColumnButton = new System.Windows.Forms.Button();
             this.removeColumnButton = new System.Windows.Forms.Button();
             this.footerGroupBox = new System.Windows.Forms.GroupBox();
@@ -69,11 +74,7 @@
             this.textToIgnoreFileNameLabel = new System.Windows.Forms.Label();
             this.textToIgnoreFileNameTextBox = new System.Windows.Forms.TextBox();
             this.useFileNameCheckBox = new System.Windows.Forms.CheckBox();
-            this.columnNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.columnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.databaseColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ignoreColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.notInFileColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.truncateTableCheckBox = new System.Windows.Forms.CheckBox();
             this.headerGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.headerDataGridView)).BeginInit();
             this.columnGroupBox.SuspendLayout();
@@ -90,7 +91,7 @@
             this.headerGroupBox.Controls.Add(this.headerDataGridView);
             this.headerGroupBox.Controls.Add(this.addHeaderButton);
             this.headerGroupBox.Enabled = false;
-            this.headerGroupBox.Location = new System.Drawing.Point(13, 167);
+            this.headerGroupBox.Location = new System.Drawing.Point(13, 197);
             this.headerGroupBox.Name = "headerGroupBox";
             this.headerGroupBox.Size = new System.Drawing.Size(362, 157);
             this.headerGroupBox.TabIndex = 0;
@@ -156,7 +157,7 @@
             this.columnGroupBox.Controls.Add(this.addColumnButton);
             this.columnGroupBox.Controls.Add(this.removeColumnButton);
             this.columnGroupBox.Enabled = false;
-            this.columnGroupBox.Location = new System.Drawing.Point(392, 167);
+            this.columnGroupBox.Location = new System.Drawing.Point(392, 197);
             this.columnGroupBox.Name = "columnGroupBox";
             this.columnGroupBox.Size = new System.Drawing.Size(362, 320);
             this.columnGroupBox.TabIndex = 1;
@@ -180,6 +181,37 @@
             this.columnDataGridView.RowHeadersVisible = false;
             this.columnDataGridView.Size = new System.Drawing.Size(264, 290);
             this.columnDataGridView.TabIndex = 4;
+            // 
+            // columnNumber
+            // 
+            this.columnNumber.HeaderText = "#";
+            this.columnNumber.Name = "columnNumber";
+            this.columnNumber.Width = 25;
+            // 
+            // columnName
+            // 
+            this.columnName.HeaderText = "Column Name";
+            this.columnName.Name = "columnName";
+            // 
+            // databaseColumnName
+            // 
+            this.databaseColumnName.HeaderText = "Database Column Name";
+            this.databaseColumnName.Name = "databaseColumnName";
+            this.databaseColumnName.Width = 145;
+            // 
+            // ignoreColumn
+            // 
+            this.ignoreColumn.HeaderText = "Ignore";
+            this.ignoreColumn.Name = "ignoreColumn";
+            this.ignoreColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ignoreColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // notInFileColumn
+            // 
+            this.notInFileColumn.HeaderText = "Not In File";
+            this.notInFileColumn.Name = "notInFileColumn";
+            this.notInFileColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.notInFileColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // addColumnButton
             // 
@@ -207,7 +239,7 @@
             this.footerGroupBox.Controls.Add(this.addFootersButton);
             this.footerGroupBox.Controls.Add(this.removeFootersButton);
             this.footerGroupBox.Enabled = false;
-            this.footerGroupBox.Location = new System.Drawing.Point(13, 330);
+            this.footerGroupBox.Location = new System.Drawing.Point(13, 360);
             this.footerGroupBox.Name = "footerGroupBox";
             this.footerGroupBox.Size = new System.Drawing.Size(362, 157);
             this.footerGroupBox.TabIndex = 2;
@@ -266,7 +298,7 @@
             // 
             // saveFileTypeButton
             // 
-            this.saveFileTypeButton.Location = new System.Drawing.Point(668, 493);
+            this.saveFileTypeButton.Location = new System.Drawing.Point(668, 523);
             this.saveFileTypeButton.Name = "saveFileTypeButton";
             this.saveFileTypeButton.Size = new System.Drawing.Size(75, 23);
             this.saveFileTypeButton.TabIndex = 3;
@@ -370,6 +402,7 @@
             // 
             // settingsGroupBox
             // 
+            this.settingsGroupBox.Controls.Add(this.truncateTableCheckBox);
             this.settingsGroupBox.Controls.Add(this.dateTimeColumnTextBox);
             this.settingsGroupBox.Controls.Add(this.dateTimeColumnLabel);
             this.settingsGroupBox.Controls.Add(this.linkDateTimeCheckBox);
@@ -386,7 +419,7 @@
             this.settingsGroupBox.Enabled = false;
             this.settingsGroupBox.Location = new System.Drawing.Point(311, 12);
             this.settingsGroupBox.Name = "settingsGroupBox";
-            this.settingsGroupBox.Size = new System.Drawing.Size(443, 149);
+            this.settingsGroupBox.Size = new System.Drawing.Size(443, 179);
             this.settingsGroupBox.TabIndex = 6;
             this.settingsGroupBox.TabStop = false;
             this.settingsGroupBox.Text = "Settings";
@@ -501,42 +534,21 @@
             this.useFileNameCheckBox.Text = "Use File Name";
             this.useFileNameCheckBox.UseVisualStyleBackColor = true;
             // 
-            // columnNumber
+            // truncateTableCheckBox
             // 
-            this.columnNumber.HeaderText = "#";
-            this.columnNumber.Name = "columnNumber";
-            this.columnNumber.Width = 25;
-            // 
-            // columnName
-            // 
-            this.columnName.HeaderText = "Column Name";
-            this.columnName.Name = "columnName";
-            // 
-            // databaseColumnName
-            // 
-            this.databaseColumnName.HeaderText = "Database Column Name";
-            this.databaseColumnName.Name = "databaseColumnName";
-            this.databaseColumnName.Width = 145;
-            // 
-            // ignoreColumn
-            // 
-            this.ignoreColumn.HeaderText = "Ignore";
-            this.ignoreColumn.Name = "ignoreColumn";
-            this.ignoreColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ignoreColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // notInFileColumn
-            // 
-            this.notInFileColumn.HeaderText = "Not In File";
-            this.notInFileColumn.Name = "notInFileColumn";
-            this.notInFileColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.notInFileColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.truncateTableCheckBox.AutoSize = true;
+            this.truncateTableCheckBox.Location = new System.Drawing.Point(6, 149);
+            this.truncateTableCheckBox.Name = "truncateTableCheckBox";
+            this.truncateTableCheckBox.Size = new System.Drawing.Size(99, 17);
+            this.truncateTableCheckBox.TabIndex = 16;
+            this.truncateTableCheckBox.Text = "Truncate Table";
+            this.truncateTableCheckBox.UseVisualStyleBackColor = true;
             // 
             // CreateFileTypeModal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(766, 528);
+            this.ClientSize = new System.Drawing.Size(766, 551);
             this.Controls.Add(this.settingsGroupBox);
             this.Controls.Add(this.fileTypeGroupBox);
             this.Controls.Add(this.saveFileTypeButton);
@@ -607,5 +619,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn databaseColumnName;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ignoreColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn notInFileColumn;
+        private System.Windows.Forms.CheckBox truncateTableCheckBox;
     }
 }
