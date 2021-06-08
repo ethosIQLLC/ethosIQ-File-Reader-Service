@@ -17,6 +17,7 @@ namespace ethosIQ_File_Reader_Shared.FileConfig
         public string DateTimeFormatFileExtension;
 
         public bool LinkDateTime;
+        public string DateTimeFormatLinkDate;
         public string DateTimeColumn;
 
         public bool TruncateTable;
@@ -26,7 +27,7 @@ namespace ethosIQ_File_Reader_Shared.FileConfig
 
         }
 
-        public Settings(int FileTypeID, bool UseFileName, bool UseFileExtension, string TextToIgnoreFileName, string DateTimeFormatFileName, string TextToIgnoreFileExtension, string DateTimeFormatFileExtension, bool LinkDateTime, string DateTimeColumn, bool TruncateTable)
+        public Settings(int FileTypeID, bool UseFileName, bool UseFileExtension, string TextToIgnoreFileName, string DateTimeFormatFileName, string TextToIgnoreFileExtension, string DateTimeFormatFileExtension, bool LinkDateTime, string DateTimeColumn, string DateTimeFormatLinkDate, bool TruncateTable)
         {
             this.FileTypeID = FileTypeID;
             this.UseFileName = UseFileName;
@@ -38,6 +39,7 @@ namespace ethosIQ_File_Reader_Shared.FileConfig
             this.LinkDateTime = LinkDateTime;
             this.DateTimeColumn = DateTimeColumn;
             this.TruncateTable = TruncateTable;
+            this.DateTimeFormatLinkDate = DateTimeFormatLinkDate;
         }
     }
 }

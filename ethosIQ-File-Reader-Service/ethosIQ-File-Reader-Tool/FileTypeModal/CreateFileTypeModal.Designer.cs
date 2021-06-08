@@ -61,6 +61,7 @@
             this.fileTypeIDLable = new System.Windows.Forms.Label();
             this.fileTypeNameLabel = new System.Windows.Forms.Label();
             this.settingsGroupBox = new System.Windows.Forms.GroupBox();
+            this.truncateTableCheckBox = new System.Windows.Forms.CheckBox();
             this.dateTimeColumnTextBox = new System.Windows.Forms.TextBox();
             this.dateTimeColumnLabel = new System.Windows.Forms.Label();
             this.linkDateTimeCheckBox = new System.Windows.Forms.CheckBox();
@@ -74,7 +75,8 @@
             this.textToIgnoreFileNameLabel = new System.Windows.Forms.Label();
             this.textToIgnoreFileNameTextBox = new System.Windows.Forms.TextBox();
             this.useFileNameCheckBox = new System.Windows.Forms.CheckBox();
-            this.truncateTableCheckBox = new System.Windows.Forms.CheckBox();
+            this.dateTimeFormatLinkDateTextBox = new System.Windows.Forms.TextBox();
+            this.dateTimeFormatLinkDateLabel = new System.Windows.Forms.Label();
             this.headerGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.headerDataGridView)).BeginInit();
             this.columnGroupBox.SuspendLayout();
@@ -402,6 +404,8 @@
             // 
             // settingsGroupBox
             // 
+            this.settingsGroupBox.Controls.Add(this.dateTimeFormatLinkDateLabel);
+            this.settingsGroupBox.Controls.Add(this.dateTimeFormatLinkDateTextBox);
             this.settingsGroupBox.Controls.Add(this.truncateTableCheckBox);
             this.settingsGroupBox.Controls.Add(this.dateTimeColumnTextBox);
             this.settingsGroupBox.Controls.Add(this.dateTimeColumnLabel);
@@ -423,6 +427,16 @@
             this.settingsGroupBox.TabIndex = 6;
             this.settingsGroupBox.TabStop = false;
             this.settingsGroupBox.Text = "Settings";
+            // 
+            // truncateTableCheckBox
+            // 
+            this.truncateTableCheckBox.AutoSize = true;
+            this.truncateTableCheckBox.Location = new System.Drawing.Point(6, 149);
+            this.truncateTableCheckBox.Name = "truncateTableCheckBox";
+            this.truncateTableCheckBox.Size = new System.Drawing.Size(99, 17);
+            this.truncateTableCheckBox.TabIndex = 16;
+            this.truncateTableCheckBox.Text = "Truncate Table";
+            this.truncateTableCheckBox.UseVisualStyleBackColor = true;
             // 
             // dateTimeColumnTextBox
             // 
@@ -534,15 +548,21 @@
             this.useFileNameCheckBox.Text = "Use File Name";
             this.useFileNameCheckBox.UseVisualStyleBackColor = true;
             // 
-            // truncateTableCheckBox
+            // dateTimeFormatLinkDateTextBox
             // 
-            this.truncateTableCheckBox.AutoSize = true;
-            this.truncateTableCheckBox.Location = new System.Drawing.Point(6, 149);
-            this.truncateTableCheckBox.Name = "truncateTableCheckBox";
-            this.truncateTableCheckBox.Size = new System.Drawing.Size(99, 17);
-            this.truncateTableCheckBox.TabIndex = 16;
-            this.truncateTableCheckBox.Text = "Truncate Table";
-            this.truncateTableCheckBox.UseVisualStyleBackColor = true;
+            this.dateTimeFormatLinkDateTextBox.Location = new System.Drawing.Point(203, 149);
+            this.dateTimeFormatLinkDateTextBox.Name = "dateTimeFormatLinkDateTextBox";
+            this.dateTimeFormatLinkDateTextBox.Size = new System.Drawing.Size(229, 20);
+            this.dateTimeFormatLinkDateTextBox.TabIndex = 17;
+            // 
+            // dateTimeFormatLinkDateLabel
+            // 
+            this.dateTimeFormatLinkDateLabel.AutoSize = true;
+            this.dateTimeFormatLinkDateLabel.Location = new System.Drawing.Point(106, 153);
+            this.dateTimeFormatLinkDateLabel.Name = "dateTimeFormatLinkDateLabel";
+            this.dateTimeFormatLinkDateLabel.Size = new System.Drawing.Size(91, 13);
+            this.dateTimeFormatLinkDateLabel.TabIndex = 18;
+            this.dateTimeFormatLinkDateLabel.Text = "DateTime Format:";
             // 
             // CreateFileTypeModal
             // 
@@ -620,5 +640,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn ignoreColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn notInFileColumn;
         private System.Windows.Forms.CheckBox truncateTableCheckBox;
+        private System.Windows.Forms.Label dateTimeFormatLinkDateLabel;
+        private System.Windows.Forms.TextBox dateTimeFormatLinkDateTextBox;
     }
 }

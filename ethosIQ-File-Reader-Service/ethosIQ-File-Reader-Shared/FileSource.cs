@@ -211,24 +211,43 @@ namespace ethosIQ_File_Reader_Shared
 
                             foreach (Column column in FileType.Columns.OrderBy(x => x.ColumnNumber))
                             {
-                                if (!column.Ignore)
+                                try
                                 {
-                                    if (FileType.Settings.LinkDateTime && FileType.Settings.DateTimeColumn == column.ColumnName)
+                                    if (!column.Ignore)
                                     {
-                                        column.ColumnData = ActualDateTime;
+                                        if (FileType.Settings.LinkDateTime && FileType.Settings.DateTimeColumn == column.ColumnName)
+                                        {
+                                            DateTime linkedDate = DateTime.ParseExact(Data[index], FileType.Settings.DateTimeFormatLinkDate, CultureInfo.InvariantCulture);
+
+                                            if (linkedDate != null)
+                                            {
+                                                column.ColumnData = linkedDate;
+                                            }
+
+                                            //column.ColumnData = ActualDateTime;
+                                        }
+                                        else
+                                        {
+                                            column.ColumnData = Data[index];
+                                        }
+                                        if (!column.NotInFile)
+                                        {
+                                            index++;
+                                        }
                                     }
-                                    else
-                                    {
-                                        column.ColumnData = Data[index];
-                                    }
-                                    if (!column.NotInFile)
+                                    else //Added
                                     {
                                         index++;
                                     }
                                 }
-                                else //Added
+                                catch(Exception exception)
                                 {
-                                    index++;
+                                    Console.WriteLine("Failed to process row: " + DataLine + " - " + exception.Message);
+
+                                    if (eventLog != null)
+                                    {
+                                        eventLog.WriteEntry("Failed to process row: LinkDate Format: " + FileType.Settings.DateTimeFormatLinkDate + ": " + DataLine + " - " + exception.Message, EventLogEntryType.Error);
+                                    }
                                 }
                             }
 

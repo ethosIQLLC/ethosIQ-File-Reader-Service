@@ -114,7 +114,7 @@ namespace ethosIQ_File_Reader_Tool.FileTypeModal
                 SettingsDAO settingsDAO = new SettingsDAO(ConfigurationDatabase);
                 settingsDAO.Delete(FileTypeID);
 
-                settingsDAO.Insert(new Settings(FileTypeID, useFileNameCheckBox.Checked, useFileExtensionCheckBox.Checked, textToIgnoreFileNameTextBox.Text, dateTimeFormatFileNameTextBox.Text, textToIgnoreFileExtensionTextBox.Text, dateTimeFormatFileExtensionTextBox.Text, linkDateTimeCheckBox.Checked, dateTimeColumnTextBox.Text, truncateTableCheckBox.Checked));
+                settingsDAO.Insert(new Settings(FileTypeID, useFileNameCheckBox.Checked, useFileExtensionCheckBox.Checked, textToIgnoreFileNameTextBox.Text, dateTimeFormatFileNameTextBox.Text, textToIgnoreFileExtensionTextBox.Text, dateTimeFormatFileExtensionTextBox.Text, linkDateTimeCheckBox.Checked, dateTimeColumnTextBox.Text, dateTimeFormatLinkDateTextBox.Text, truncateTableCheckBox.Checked));
 
                 ColumnDAO columnDAO = new ColumnDAO(ConfigurationDatabase);
                 columnDAO.DeleteAll(FileTypeID);
