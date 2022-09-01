@@ -20,6 +20,7 @@ namespace ethosIQ_File_Reader_Shared
         public string Directory;
         public int FileTypeID;
         public FileType FileType;
+        public int DateTimeErrorCount, TruncateTableErrorCount, ProcessRowErrorCount, InsertRowErrorCount;
 
         private EventLog eventLog;
         private FileSystemWatcher FileSystemWatcher;
@@ -171,11 +172,12 @@ namespace ethosIQ_File_Reader_Shared
                     catch (Exception exception)
                     {
                         Console.WriteLine("Failed to get a DateTime from file. " + exception.Message);
+                        DateTimeErrorCount++;
 
-                        if (eventLog != null)
+                       /* if (eventLog != null)
                         {
                             eventLog.WriteEntry("Failed to get a DateTime from file. " + exception.Message, EventLogEntryType.Error);
-                        }
+                        } */
                     }
 
                     if (FileType.Settings.TruncateTable)
@@ -189,11 +191,11 @@ namespace ethosIQ_File_Reader_Shared
                         catch (Exception exception)
                         {
                             Console.WriteLine("Failed to truncate table " + FileType.DatabaseStoredProcedureName + ". " + exception.Message);
-
-                            if (eventLog != null)
+                            TruncateTableErrorCount++;
+                           /* if (eventLog != null)
                             {
                                 eventLog.WriteEntry("Failed to truncate table " + FileType.DatabaseStoredProcedureName + ". " + exception.Message, EventLogEntryType.Error);
-                            }
+                            } */
                         }
                     }
 
@@ -243,11 +245,11 @@ namespace ethosIQ_File_Reader_Shared
                                 catch(Exception exception)
                                 {
                                     Console.WriteLine("Failed to process row: " + DataLine + " - " + exception.Message);
-
-                                    if (eventLog != null)
+                                    ProcessRowErrorCount++;
+                                  /*  if (eventLog != null)
                                     {
                                         eventLog.WriteEntry("Failed to process row: LinkDate Format: " + FileType.Settings.DateTimeFormatLinkDate + ": " + DataLine + " - " + exception.Message, EventLogEntryType.Error);
-                                    }
+                                    } */
                                 }
                             }
 
@@ -272,31 +274,43 @@ namespace ethosIQ_File_Reader_Shared
                                 catch (Exception exception)
                                 {
                                     Console.WriteLine("Failed to insert row: " + DataLine + " - " + exception.Message);
-
-                                    if (eventLog != null)
+                                    InsertRowErrorCount++;
+                                   /* if (eventLog != null)
                                     {
                                         eventLog.WriteEntry("Failed to insert row: " + DataLine + " - " + exception.Message, EventLogEntryType.Error);
-                                    }
+                                    } */
                                 }
                             }
                         }
                     }
 
-                    Console.WriteLine("Successfuly processed file: " + FullPath + "!");
+                    Console.WriteLine("Successfully processed file: " + FullPath + "!. Processed " + AllRowsInFile.Count() + " rows.");
 
                     if (eventLog != null)
                     {
-                        eventLog.WriteEntry("Successfuly processed file: " + FullPath + "!", EventLogEntryType.Information);
+                        eventLog.WriteEntry("Successfully processed file: " + FullPath + "! Processed " + AllRowsInFile.Count() + " rows.", EventLogEntryType.Information);
+                        int totalErrorCount = DateTimeErrorCount + TruncateTableErrorCount + ProcessRowErrorCount + InsertRowErrorCount;
+
+                        if (totalErrorCount > 0)
+                        {
+                            eventLog.WriteEntry("Encountered "+ totalErrorCount + " errors while processing file: " + FullPath + ". " + DateTimeErrorCount 
+                                + " failure(s) to get a DateTime, " + TruncateTableErrorCount + " failure(s) to truncate tables, " + ProcessRowErrorCount + " failure(s) to process rows, and " +
+                                InsertRowErrorCount + " failure(s) to insert rows.", EventLogEntryType.Error);
+                          
+                            
+                        }
+                      
+
                     }
 
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine("Failed to prcoess file: " + FullPath + ". " + exception.Message);
+                    Console.WriteLine("Failed to process file: " + FullPath + ". " + exception.Message);
 
                     if (eventLog != null)
                     {
-                        eventLog.WriteEntry("Failed to prcoess file: " + FullPath + ". " + exception.Message, EventLogEntryType.Error);
+                        eventLog.WriteEntry("Failed to process file: " + FullPath + ". " + exception.Message, EventLogEntryType.Error);
                     }
                 }
 
